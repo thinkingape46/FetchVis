@@ -4,6 +4,7 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const HtmlWebPackPlugin = require("html-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const { WebpackManifestPlugin } = require("webpack-manifest-plugin");
+const corejs = require("core-js");
 
 const config = {
   entry: "./app/app.js",
@@ -12,6 +13,7 @@ const config = {
     path: path.resolve(__dirname, "dist"),
   },
   mode: "development",
+  devtool: "eval-cheap-source-map",
   plugins: [new HtmlWebPackPlugin({ template: "./app/index.html" })],
   devServer: {
     port: 8080,
@@ -30,7 +32,10 @@ const config = {
         use: {
           loader: "babel-loader",
           options: {
-            presets: ["@babel/preset-env", "@babel/preset-react"],
+            presets: [
+              "@babel/preset-react",
+              ["@babel/preset-env", { targets: { node: "12" } }],
+            ],
           },
         },
       },

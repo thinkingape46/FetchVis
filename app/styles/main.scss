@@ -1,5 +1,8 @@
 $mainColor: turquoise;
 
+body {  
+  background: linear-gradient(45deg, #474747, #242424);
+}
 #app {
   color: $mainColor;
 }
