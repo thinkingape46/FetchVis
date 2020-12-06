@@ -1,0 +1,40 @@
+.distance {
+  background: linear-gradient(135deg, #474747 0%, rgba(36, 36, 36, 0) 100%),
+    #242424;
+  width: 90%;
+  height: auto;
+  margin: auto;
+  border-radius: 5px;
+  box-shadow: 2px 2px 6px 0px inset #616161;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  padding: 10px;
+  box-sizing: border-box;
+}
+.distance__total {
+  margin: 5px auto 5px auto;
+  padding: 20px;
+  width: 75%;
+  font-size: 1.8rem;
+  font-weight: 300;
+  text-align: center;
+}
+.distance__split {
+  display: flex;
+  flex-direction: column;
+}
+.distance__split__cat {
+  width: 50%;
+  margin: 3px auto;
+  padding: 15px;
+  font-size: 1.2rem;
+  font-weight: 100;
+}
+.distance__meter {
+  background: linear-gradient(135deg, #474747 0%, rgba(36, 36, 36, 0) 100%),
+    #242424;
+  box-shadow: 2px 2px 5px 0px inset #616161;
+  text-align: center;
+  border-radius: 5px;
+}
