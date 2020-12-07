@@ -1,14 +1,8 @@
-@import "./components/body.scss";
-@import "./components/_date-range.scss";
-@import "./components/meter.scss";
-@import "./components/_box.scss";
-@import "./components/text.scss";
-@import "./components/header.scss";
-@import "./components/logo.scss";
-@import "./components/_footer.scss";
-
-$mainColor: turquoise;
-
-#app {
-  color: $mainColor;
-}
+@import "./modules/body.scss";
+@import "./modules/_date-range.scss";
+@import "./modules/meter.scss";
+@import "./modules/_box.scss";
+@import "./modules/text.scss";
+@import "./modules/_header.scss";
+@import "./modules/logo.scss";
+@import "./modules/_footer.scss";

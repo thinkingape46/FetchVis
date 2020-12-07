@@ -7,17 +7,17 @@ const WebpackManifestPlugin = require("webpack-manifest-plugin");
 const corejs = require("core-js");
 
 const config = {
-  entry: "./app/app.js",
+  entry: "./app/Main.js",
   output: {
     filename: "myBundle.[hash].js",
-    path: path.resolve(__dirname, "dist"),
+    path: path.resolve(__dirname, "docs"),
   },
   mode: "development",
   devtool: "eval-cheap-source-map",
   plugins: [new HtmlWebPackPlugin({ template: "./app/index.html" })],
   devServer: {
     port: 8080,
-    contentBase: path.resolve(__dirname, "dist"),
+    contentBase: path.resolve(__dirname, "docs"),
     hot: true,
   },
   module: {
