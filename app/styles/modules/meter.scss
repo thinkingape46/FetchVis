@@ -18,23 +18,23 @@
 }
 .distance__split {
   display: flex;
-  flex-direction: column;
 }
 .distance__split__cat {
   width: 50%;
-  margin: 10px auto;
-  padding: 8px;
+  margin: 10px 7px;
+  padding: 9px 0;
   display: flex;
-  justify-content: space-evenly;
+  flex-direction: column-reverse;
+  justify-content: space-between;
 }
 .distance__split__cat__text {
-  font-size: 1.2rem;
+  font-size: 0.8rem;
   font-weight: 100;
-  margin: auto;
+  margin: 3px auto;
 }
 .distance__split__cat__logo {
   height: 30px;
-  margin: auto 2px;
+  margin: 3px auto;
 }
 .distance__meter {
   text-align: center;
