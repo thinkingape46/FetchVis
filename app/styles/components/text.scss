@@ -1,3 +1,11 @@
 .text {
   color: #fff;
+
+  &--medium {
+    font-size: 1.5rem;
+  }
+
+  &--tiny {
+    font-weight: 100;
+  }
 }

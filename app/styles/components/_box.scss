@@ -1,0 +1,17 @@
+.box {
+  box-shadow: 3px 3px 10px #151515, -3px -3px 10px #666666;
+  border-radius: 5px;
+  background-color: #3d3d3d;
+
+  &--small {
+    box-shadow: 3px 3px 7px #151515, -3px -3px 7px #666666;
+  }
+
+  &--tiny {
+    box-shadow: 1px 1px 5px #151515, -1px -1px 5px #666666;
+  }
+
+  &--inset-tiny {
+    box-shadow: 1px 1px 5px inset #151515, -1px -1px 5px inset #666666;
+  }
+}
