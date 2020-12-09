@@ -4,11 +4,22 @@
   margin: 10px auto;
   padding: 10px;
   box-sizing: border-box;
+  width: 70%;
 
   &__date {
     margin: 5px;
     padding: 5px;
     border: 1px solid #151515;
     outline: none;
+    cursor: pointer;
+  }
+  &__info {
+    margin: 4px auto;
+  }
+  &__submit {
+    padding: 6px;
+    margin: 4px;
+    outline: none;
+    cursor: pointer;
   }
 }

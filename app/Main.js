@@ -1,5 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import { BrowserRouter, Switch, Route } from "react-router-dom";
 import "./styles/main.scss";
 
 // My components
@@ -7,15 +8,23 @@ import Header from "./components/Header";
 import DateRange from "./components/DateRange";
 import Distance from "./components/Distance";
 import Footer from "./components/Footer";
+import Login from "./components/Login";
 
 function Main() {
   return (
-    <>
+    <BrowserRouter>
       <Header />
-      <DateRange />
-      <Distance />
+      <Switch>
+        <Route path="/" exact>
+          <Login />
+        </Route>
+        <Route path="/app" exact>
+          <DateRange />
+          <Distance />
+        </Route>
+      </Switch>
       <Footer />
-    </>
+    </BrowserRouter>
   );
 }
 

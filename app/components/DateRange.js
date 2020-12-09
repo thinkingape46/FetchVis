@@ -1,39 +1,112 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Axios from "axios";
-import currentDate from "../scripts/currentDate";
+
+// Script imports
+import DateCalc from "../scripts/dateCalc";
+let date = new DateCalc();
 
 async function connectStrava(e) {
   try {
     const response = await Axios.get("https://www.strava.com/api/v3/athlete", {
       headers: {
-        authorization: "Bearer ACCESSTOKEN",
+        authorization: "Bearer aaa",
       },
     });
     console.log(`${response.data.firstname} ${response.data.lastname}`);
+    console.log(response.data);
   } catch (e) {
     console.log("error");
   }
 }
 
 function DateRange() {
+  const [info, setInfo] = useState("select the date range to retrieve data");
+  const [infoStyle, setInfoStyle] = useState({
+    color: "rgba(255, 255, 255, 1)",
+  });
+  const [startDate, setStartDate] = useState(date.currentDate());
+  const [endDate, setEndDate] = useState(date.currentDate());
+  const [startEpoch, setStartEpoch] = useState(new Date(startDate).valueOf());
+  const [endEpoch, setEndEpoch] = useState(new Date(endDate).valueOf());
+
+  function changeStartDate(e) {
+    setStartDate(function () {
+      return e.target.value;
+    });
+    setStartEpoch(function () {
+      return new Date(e.target.value).valueOf();
+    });
+  }
+
+  function changeEndDate(e) {
+    setEndDate(function () {
+      return e.target.value;
+    });
+    setEndEpoch(function () {
+      return new Date(e.target.value).valueOf();
+    });
+  }
+
+  function changeInfoText(e) {
+    if (startDate > endDate) {
+      setInfo(function () {
+        return "End date is after the start date!";
+      });
+      setInfoStyle(function () {
+        return {
+          color: "rgba(255, 0, 0, 1)",
+        };
+      });
+    } else {
+      setInfo(function () {
+        return "select the date range to retrieve data";
+      });
+      setInfoStyle(function () {
+        return {
+          color: "rgba(255, 255, 255, 1)",
+        };
+      });
+    }
+  }
+
   return (
     <>
       <div className="date-range box">
         <input
-          onChange={(e) => connectStrava(e)}
+          onChange={(e) => {
+            changeStartDate(e);
+          }}
           className="date-range__date  box box--inset-tiny text text--normal text--tiny"
           type="date"
           name="start-date"
-          defaultValue={currentDate()}
+          defaultValue={startDate}
           id=""
         />
         <input
+          onChange={(e) => {
+            changeEndDate(e);
+          }}
           className="date-range__date box box--inset-tiny text text--normal text--tiny"
           type="date"
           name="end-date"
-          defaultValue={currentDate()}
+          defaultValue={endDate}
           id=""
         />
+        <p
+          style={infoStyle}
+          className="date-range__info text text--tiny text--small text--center"
+        >
+          {info}
+        </p>
+        <button
+          onClick={(e) => {
+            changeInfoText(e);
+            connectStrava(e);
+          }}
+          className="date-range__submit box box--tiny text text--tiny text--small"
+        >
+          Get
+        </button>
       </div>
     </>
   );

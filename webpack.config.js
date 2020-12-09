@@ -19,6 +19,7 @@ const config = {
     port: 8080,
     contentBase: path.resolve(__dirname, "docs"),
     hot: true,
+    historyApiFallback: { index: "index.html" },
   },
   module: {
     rules: [
