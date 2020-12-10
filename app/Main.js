@@ -9,6 +9,7 @@ import DateRange from "./components/DateRange";
 import Distance from "./components/Distance";
 import Footer from "./components/Footer";
 import Login from "./components/Login";
+import AccessToken from "./components/AccessToken";
 
 function Main() {
   return (
@@ -21,6 +22,9 @@ function Main() {
         <Route path="/app" exact>
           <DateRange />
           <Distance />
+        </Route>
+        <Route path="/exchange_token">
+          <AccessToken />
         </Route>
       </Switch>
       <Footer />
