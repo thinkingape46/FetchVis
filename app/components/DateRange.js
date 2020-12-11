@@ -29,25 +29,7 @@ function DateRange() {
   const [startEpoch, setStartEpoch] = useState(new Date(startDate).valueOf());
   const [endEpoch, setEndEpoch] = useState(new Date(endDate).valueOf());
 
-  function changeStartDate(e) {
-    setStartDate(function () {
-      return e.target.value;
-    });
-    setStartEpoch(function () {
-      return new Date(e.target.value).valueOf();
-    });
-  }
-
-  function changeEndDate(e) {
-    setEndDate(function () {
-      return e.target.value;
-    });
-    setEndEpoch(function () {
-      return new Date(e.target.value).valueOf();
-    });
-  }
-
-  function changeInfoText(e) {
+  useEffect(() => {
     if (startDate > endDate) {
       setInfo(function () {
         return "End date is after the start date!";
@@ -67,6 +49,24 @@ function DateRange() {
         };
       });
     }
+  }, [startEpoch, endEpoch]);
+
+  function changeStartDate(e) {
+    setStartDate(function () {
+      return e.target.value;
+    });
+    setStartEpoch(function () {
+      return new Date(e.target.value).valueOf();
+    });
+  }
+
+  function changeEndDate(e) {
+    setEndDate(function () {
+      return e.target.value;
+    });
+    setEndEpoch(function () {
+      return new Date(e.target.value).valueOf();
+    });
   }
 
   return (
@@ -98,13 +98,7 @@ function DateRange() {
         >
           {info}
         </p>
-        <button
-          onClick={(e) => {
-            changeInfoText(e);
-            connectStrava(e);
-          }}
-          className="date-range__submit box box--tiny text text--tiny text--small"
-        >
+        <button className="date-range__submit box box--tiny text text--tiny text--small">
           Get
         </button>
       </div>
