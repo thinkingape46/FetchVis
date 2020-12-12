@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 
-function AccessToken() {
+function AccessToken(props) {
   const response = window.location.href.split("?")[1].split("&");
   console.log(response);
 
@@ -22,12 +22,14 @@ function AccessToken() {
   console.log(parameters);
 
   if (parameters["code"] && parameters["scope"]) {
+    props.history.push("app");
     return (
       <>
         <p className="text text--center">Success</p>
       </>
     );
   } else {
+    props.history.push("");
     return (
       <>
         <p className="text text--center">There was an error</p>
@@ -36,4 +38,4 @@ function AccessToken() {
   }
 }
 
-export default AccessToken;
+export default withRouter(AccessToken);
