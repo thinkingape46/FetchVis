@@ -7,11 +7,12 @@
   width: 70%;
 
   &__date {
-    margin: 5px;
+    margin: 5px auto;
     padding: 5px;
     border: 1px solid #151515;
     outline: none;
-    cursor: pointer;
+    width: 100%;
+    box-sizing: border-box;
   }
   &__info {
     margin: 4px auto;

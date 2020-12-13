@@ -1,10 +1,12 @@
-@import "./modules/body.scss";
+@import "./base/mixins";
+@import "./modules/_body.scss";
 @import "./modules/_date-range.scss";
-@import "./modules/meter.scss";
+@import "./modules/_meter.scss";
 @import "./modules/_box.scss";
-@import "./modules/text.scss";
+@import "./modules/_text.scss";
 @import "./modules/_header.scss";
-@import "./modules/logo.scss";
-@import "./base/variables.scss";
+@import "./modules/_logo.scss";
+@import "./base/_variables.scss";
 @import "./modules/strava";
 @import "./modules/_footer.scss";
+@import "./modules/_flashmessage";

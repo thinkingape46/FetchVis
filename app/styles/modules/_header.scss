@@ -1,1 +1,6 @@
-
+.header {
+  &__link {
+    display: flex;
+    text-decoration: none;
+  }
+}

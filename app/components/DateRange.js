@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import Axios from "axios";
+import ExampleContext from "../ExampleContext";
 
 // Script imports
 import DateCalc from "../scripts/dateCalc";
@@ -19,7 +20,7 @@ async function connectStrava(e) {
   }
 }
 
-function DateRange() {
+function DateRange(props) {
   const [info, setInfo] = useState("select the date range to retrieve data");
   const [infoStyle, setInfoStyle] = useState({
     color: "rgba(255, 255, 255, 1)",
@@ -28,6 +29,7 @@ function DateRange() {
   const [endDate, setEndDate] = useState(date.currentDate());
   const [startEpoch, setStartEpoch] = useState(new Date(startDate).valueOf());
   const [endEpoch, setEndEpoch] = useState(new Date(endDate).valueOf());
+  const addFlashMessage = useContext(ExampleContext);
 
   useEffect(() => {
     if (startDate > endDate) {
@@ -50,6 +52,10 @@ function DateRange() {
       });
     }
   }, [startEpoch, endEpoch]);
+
+  useEffect(() => {
+    addFlashMessage("Connected to Strava!");
+  }, []);
 
   function changeStartDate(e) {
     setStartDate(function () {
