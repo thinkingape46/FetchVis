@@ -1,12 +1,14 @@
-import React, { useEffect } from "react";
+import React, { useContext, useEffect } from "react";
+import StateContext from "../context/StateContext";
 
 function FlashMessages(props) {
+  const appState = useContext(StateContext);
   return (
     <div className="flash-button">
-      {props.flashMessages.map((msg, index) => {
+      {appState.flashMessages.map((msg, index) => {
         return (
           <p
-            className="flash-button__message text text--center text--normal"
+            className="flash-button__message box text text--center text--normal"
             key={index}
           >
             {msg}

@@ -80,6 +80,7 @@ if (currentTask == "webpackDev" || currentTask == "dev") {
   config.devtool = "source-map";
   config.devServer = {
     port: 3000,
+    host: "0.0.0.0",
     contentBase: path.join(__dirname, "docs"),
     hot: true,
     historyApiFallback: { index: "index.html" },
