@@ -16,15 +16,94 @@ import Login from "./components/Login";
 import AccessToken from "./components/AccessToken";
 import FlashMessage from "./components/FlashMessage";
 
+// Import scripts
+import DateCalc from "./scripts/dateCalc";
+let date = new DateCalc();
+
 function Main() {
   const initialState = {
     flashMessages: [],
+    startDate: date.currentDate(),
+    endDate: date.currentDate(),
+    startEpoch: Date.now(),
+    endEpoch: Date.now(),
+    info: "select the date range",
+    infoStyle: "",
   };
 
   function reducer(state, action) {
     switch (action.type) {
       case "flashMessage":
-        return { flashMessages: state.flashMessages.concat(action.value) };
+        return {
+          flashMessages: state.flashMessages.concat(action.value),
+          startDate: state.startDate,
+          endDate: state.endDate,
+          startEpoch: state.startEpoch,
+          endEpoch: state.endEpoch,
+          info: state.info,
+          infoStyle: state.infoStyle,
+        };
+      case "changeStartDate":
+        return {
+          flashMessages: state.flashMessages,
+          startDate: action.value,
+          endDate: state.endDate,
+          startEpoch: state.startEpoch,
+          endEpoch: state.endEpoch,
+          info: state.info,
+          infoStyle: state.infoStyle,
+        };
+      case "changeEndDate": {
+        return {
+          flashMessages: state.flashMessages,
+          startDate: state.startDate,
+          endDate: action.value,
+          startEpoch: state.startEpoch,
+          endEpoch: state.endEpoch,
+          info: state.info,
+          infoStyle: state.infoStyle,
+        };
+      }
+      case "changeStartEpoch":
+        return {
+          flashMessages: state.flashMessages,
+          startDate: state.startDate,
+          endDate: state.endDate,
+          startEpoch: action.value,
+          endEpoch: state.endEpoch,
+          info: state.info,
+          infoStyle: state.infoStyle,
+        };
+      case "changeEndEpoch":
+        return {
+          flashMessages: state.flashMessages,
+          startDate: state.startDate,
+          endDate: state.endDate,
+          startEpoch: state.startEpoch,
+          endEpoch: action.value,
+          info: state.info,
+          infoStyle: state.infoStyle,
+        };
+      case "changeInfo":
+        return {
+          flashMessages: state.flashMessages,
+          startDate: state.startDate,
+          endDate: state.endDate,
+          startEpoch: state.startEpoch,
+          endEpoch: state.endEpoch,
+          info: action.value,
+          infoStyle: state.infoStyle,
+        };
+      case "changeInfoStyle":
+        return {
+          flashMessages: state.flashMessages,
+          startDate: state.startDate,
+          endDate: state.endDate,
+          startEpoch: state.startEpoch,
+          endEpoch: state.endEpoch,
+          info: state.info,
+          infoStyle: action.value,
+        };
     }
   }
 
