@@ -1,5 +1,6 @@
 import React, { useReducer, useState } from "react";
 import ReactDOM from "react-dom";
+import { useImmerReducer } from "use-immer";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import "./styles/main.scss";
 
@@ -29,85 +30,44 @@ function Main() {
     endEpoch: Date.now(),
     info: "select the date range",
     infoStyle: "",
+    authorizationCode: "",
+    scopeRequest: "read,activity:read,activity:read_all,profile:read_all",
+    scopeReceived: "",
   };
 
-  function reducer(state, action) {
+  function reducer(draft, action) {
     switch (action.type) {
       case "flashMessage":
-        return {
-          flashMessages: state.flashMessages.concat(action.value),
-          startDate: state.startDate,
-          endDate: state.endDate,
-          startEpoch: state.startEpoch,
-          endEpoch: state.endEpoch,
-          info: state.info,
-          infoStyle: state.infoStyle,
-        };
+        draft.flashMessages.push(action.value);
+        break;
       case "changeStartDate":
-        return {
-          flashMessages: state.flashMessages,
-          startDate: action.value,
-          endDate: state.endDate,
-          startEpoch: state.startEpoch,
-          endEpoch: state.endEpoch,
-          info: state.info,
-          infoStyle: state.infoStyle,
-        };
-      case "changeEndDate": {
-        return {
-          flashMessages: state.flashMessages,
-          startDate: state.startDate,
-          endDate: action.value,
-          startEpoch: state.startEpoch,
-          endEpoch: state.endEpoch,
-          info: state.info,
-          infoStyle: state.infoStyle,
-        };
-      }
+        draft.startDate = action.value;
+        break;
+      case "changeEndDate":
+        draft.endDate = action.value;
+        break;
       case "changeStartEpoch":
-        return {
-          flashMessages: state.flashMessages,
-          startDate: state.startDate,
-          endDate: state.endDate,
-          startEpoch: action.value,
-          endEpoch: state.endEpoch,
-          info: state.info,
-          infoStyle: state.infoStyle,
-        };
+        draft.startEpoch = action.value;
+        break;
       case "changeEndEpoch":
-        return {
-          flashMessages: state.flashMessages,
-          startDate: state.startDate,
-          endDate: state.endDate,
-          startEpoch: state.startEpoch,
-          endEpoch: action.value,
-          info: state.info,
-          infoStyle: state.infoStyle,
-        };
+        draft.endEpoch = action.value;
+        break;
       case "changeInfo":
-        return {
-          flashMessages: state.flashMessages,
-          startDate: state.startDate,
-          endDate: state.endDate,
-          startEpoch: state.startEpoch,
-          endEpoch: state.endEpoch,
-          info: action.value,
-          infoStyle: state.infoStyle,
-        };
+        draft.info = action.value;
+        break;
       case "changeInfoStyle":
-        return {
-          flashMessages: state.flashMessages,
-          startDate: state.startDate,
-          endDate: state.endDate,
-          startEpoch: state.startEpoch,
-          endEpoch: state.endEpoch,
-          info: state.info,
-          infoStyle: action.value,
-        };
+        draft.infoStyle = action.value;
+        break;
+      case "scopeReceived":
+        draft.scopeReceived = action.value;
+        break;
+      case "authorizationCode":
+        draft.authorizationCode = action.value;
+        break;
     }
   }
 
-  const [state, dispatch] = useReducer(reducer, initialState);
+  const [state, dispatch] = useImmerReducer(reducer, initialState);
 
   function addFlashMessage(msg) {
     setFlashMessages((prev) => prev.concat(msg));

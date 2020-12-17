@@ -1,9 +1,15 @@
-import React, { useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import { Link, withRouter } from "react-router-dom";
 
+/* Import Context */
+import DispatchContext from "../context/DipatchContext";
+import StateContext from "../context/StateContext";
+
 function AccessToken(props) {
+  const appDispatch = useContext(DispatchContext);
+  const AppState = useContext(StateContext);
+
   const response = window.location.href.split("?")[1].split("&");
-  console.log(response);
 
   const parameters = {};
 
@@ -13,28 +19,32 @@ function AccessToken(props) {
         break;
 
       case "code":
-        parameters["code"] = response[i].split("=")[1];
+        parameters["authorizationCode"] = response[i].split("=")[1];
+        break;
 
       case "scope":
-        parameters["scope"] = response[i].split("=")[1].split(",");
+        parameters["scope"] = response[i].split("=")[1];
+        break;
     }
   }
-  console.log(parameters);
+  appDispatch({
+    type: "scopeReceived",
+    value: parameters["scope"],
+  });
+  appDispatch({
+    type: "authorizationCode",
+    value: parameters["authorizationCode"],
+  });
 
-  if (parameters["code"] && parameters["scope"]) {
+  if (
+    parameters["authorizationCode"] &&
+    parameters["scope"] == AppState.scopeRequest
+  ) {
     props.history.push("app");
-    return (
-      <>
-        <p className="text text--center">Success</p>
-      </>
-    );
+    return <></>;
   } else {
     props.history.push("");
-    return (
-      <>
-        <p className="text text--center">There was an error</p>
-      </>
-    );
+    return <></>;
   }
 }
 
