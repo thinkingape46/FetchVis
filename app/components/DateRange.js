@@ -13,6 +13,52 @@ function DateRange(props) {
   const appDispatch = useContext(DispatchContext);
   const appState = useContext(StateContext);
 
+  function changeStartDate(e) {
+    appDispatch({
+      type: "changeStartDate",
+      value: e.target.value,
+    });
+    appDispatch({
+      type: "changeStartEpoch",
+      value: new Date(e.target.value).valueOf(),
+    });
+  }
+
+  function changeEndDate(e) {
+    appDispatch({
+      type: "changeEndDate",
+      value: e.target.value,
+    });
+    appDispatch({
+      type: "changeEndEpoch",
+      value: new Date(e.target.value).valueOf(),
+    });
+  }
+
+  /* Making a request for the access token */
+
+  const postUrl = `https://www.strava.com/oauth/token?client_id=${
+    process.env.CLIENTID
+  }&client_secret=${process.env.CLIENTSECRET}&code=${localStorage.getItem(
+    "authorizationCode"
+  )}&grant_type=authorization_code`;
+
+  Axios.post(postUrl)
+    .then((response) => {
+      console.log(response.data);
+      localStorage.setItem("strava_access_token", response.data.access_token);
+      localStorage.setItem("strava_refresh_token", response.data.refresh_token);
+      localStorage.setItem(
+        "currentAthlete",
+        JSON.stringify(response.data.athlete)
+      ),
+        localStorage.setItem("strava_expires-at", response.data.expires_at),
+        localStorage.setItem("strava_expires-in", response.data.expires_in);
+      console.log(JSON.parse(localStorage.getItem("currentAthlete")));
+    })
+    .catch((error) => console.log(error));
+
+  /* UseEffect */
   useEffect(() => {
     if (appState.startEpoch > appState.endEpoch) {
       appDispatch({
@@ -46,28 +92,6 @@ function DateRange(props) {
       appDispatch({ type: "flashMessage", value: "Connected to Strava!" });
     }
   }, []);
-
-  function changeStartDate(e) {
-    appDispatch({
-      type: "changeStartDate",
-      value: e.target.value,
-    });
-    appDispatch({
-      type: "changeStartEpoch",
-      value: new Date(e.target.value).valueOf(),
-    });
-  }
-
-  function changeEndDate(e) {
-    appDispatch({
-      type: "changeEndDate",
-      value: e.target.value,
-    });
-    appDispatch({
-      type: "changeEndEpoch",
-      value: new Date(e.target.value).valueOf(),
-    });
-  }
 
   return (
     <>
