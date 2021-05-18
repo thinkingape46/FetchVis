@@ -79,7 +79,7 @@ const config = {
 if (currentTask == "webpackDev" || currentTask == "dev") {
   config.devtool = "source-map";
   config.devServer = {
-    port: 3000,
+    port: 3006,
     host: "0.0.0.0",
     contentBase: path.join(__dirname, "docs"),
     hot: true,
