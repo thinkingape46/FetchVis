@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from "react";
-import { Link, withRouter } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 
 /* Import Context */
 import DispatchContext from "../context/DipatchContext";
@@ -38,16 +38,27 @@ function AccessToken(props) {
     value: parameters["authorizationCode"],
   });
 
-  if (
-    parameters["authorizationCode"] != "" &&
-    parameters["scope"] == AppState.scopeRequest
-  ) {
-    props.history.push("app");
-    return <></>;
-  } else {
-    props.history.push("");
-    return <></>;
-  }
+  useEffect(() => {
+    if (
+      parameters["authorizationCode"] != "" &&
+      parameters["scope"] == AppState.scopeRequest
+    ) {
+      // props.history.push("app");
+      appDispatch({
+        type: "login",
+      });
+    } else {
+      appDispatch({
+        type: "logout",
+      });
+    }
+  }, []);
+
+  return (
+    <>
+      <p>Please Wait..</p>
+    </>
+  );
 }
 
 export default withRouter(AccessToken);

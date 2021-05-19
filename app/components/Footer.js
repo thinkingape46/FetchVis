@@ -1,9 +1,8 @@
-import React, { useEffect } from "react";
+import React from "react";
 
 function Footer() {
   return (
     <>
-      {" "}
       <footer className="footer">
         <img
           className="powered-by-strava"
