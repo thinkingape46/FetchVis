@@ -1,34 +1,21 @@
-import React, { useEffect } from "react";
+import React from "react";
+import { BrowserRouter, Switch } from "react-router-dom";
 import ReactDOM from "react-dom";
-import { Provider, useSelector, useDispatch } from "react-redux";
+import { Provider } from "react-redux";
 import "./styles/main.scss";
 
-// Import components
-import Header from "./components/Header";
-import Distance from "./components/Distance";
-import Footer from "./components/Footer";
-import Login from "./components/Login";
+// ROUTE IMPORTS
+import Routes from "./Routes";
 
 // REDUX STORE IMPORT
 import store from "./store";
 
-// Import scripts
-import DateCalc from "./scripts/dateCalc";
-let date = new DateCalc();
-
 function Main() {
-  const dispatch = useDispatch();
-  const loggedIn = useSelector((store) => store.loggedIn);
-  console.log(store.getState());
-  // useEffect(() => {
-  //   dispatch({ type: "login" });
-  // }, []);
-
   return (
     <>
-      <Header />
-      {loggedIn ? <Distance /> : <Login />}
-      <Footer />
+      <BrowserRouter>
+        <Switch>{Routes()}</Switch>
+      </BrowserRouter>
     </>
   );
 }
