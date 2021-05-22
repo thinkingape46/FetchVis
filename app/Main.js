@@ -8,7 +8,7 @@ import "./styles/main.scss";
 import Routes from "./Routes";
 
 // REDUX STORE IMPORT
-import store from "./store";
+import store from "./store/rootReducer";
 
 function Main() {
   return (

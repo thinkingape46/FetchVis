@@ -1,15 +1,15 @@
-import React, { useContext, useEffect } from "react";
-import { withRouter } from "react-router-dom";
+import React, { useEffect } from "react";
+import { useDispatch } from "react-redux";
 
-/* Import Context */
-import DispatchContext from "../context/DipatchContext";
-import StateContext from "../context/StateContext";
+// ACTIONS IMPORT
+import { LOGIN, ADDSCOPE, AUTHORIZATIONCODE } from "../store/authReducer";
 
 function AccessToken(props) {
-  const appDispatch = useContext(DispatchContext);
-  const AppState = useContext(StateContext);
-
   const response = window.location.href.split("?")[1].split("&");
+
+  // REDUX HOOKS START
+  const dispatch = useDispatch();
+  // REDUX HOOKS END
 
   const parameters = {};
 
@@ -29,28 +29,26 @@ function AccessToken(props) {
         break;
     }
   }
-  appDispatch({
-    type: "scopeReceived",
-    value: parameters["scope"],
-  });
-  appDispatch({
-    type: "authorizationCode",
-    value: parameters["authorizationCode"],
-  });
 
   useEffect(() => {
     if (
       parameters["authorizationCode"] != "" &&
-      parameters["scope"] == AppState.scopeRequest
+      parameters["scope"] ===
+        "read,activity:read,activity:read_all,profile:read_all"
     ) {
-      // props.history.push("app");
-      appDispatch({
-        type: "login",
+      console.log("hello");
+      dispatch({ type: LOGIN });
+      dispatch({
+        type: ADDSCOPE,
+        scopeReceived: parameters["scope"],
       });
+      dispatch({
+        type: AUTHORIZATIONCODE,
+        authorizationCode: parameters["authorizationCode"],
+      });
+      props.history.push("/app");
     } else {
-      appDispatch({
-        type: "logout",
-      });
+      props.history.push("/");
     }
   }, []);
 
@@ -61,4 +59,4 @@ function AccessToken(props) {
   );
 }
 
-export default withRouter(AccessToken);
+export default AccessToken;
