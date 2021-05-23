@@ -3,8 +3,13 @@ import { createStore, combineReducers } from "redux";
 // REDUCERS IMPORT
 import authReducer from "./authReducer";
 import dateRangeReducer from "./dateRangeReducer";
+import userProfileReducer from "./userProfileReducer";
 
-const combinedReducers = combineReducers({ authReducer, dateRangeReducer });
+const combinedReducers = combineReducers({
+  authReducer,
+  dateRangeReducer,
+  userProfileReducer,
+});
 
 const store = createStore(
   combinedReducers,
