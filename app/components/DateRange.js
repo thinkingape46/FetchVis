@@ -1,37 +1,39 @@
 import React, { useEffect, useState, useContext } from "react";
 import Axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
 
 /* Import Context */
-import DispatchContext from "../context/DipatchContext";
-import StateContext from "../context/StateContext";
 
-// Script imports
+// SCRIPT IMPORTS
 import DateCalc from "../scripts/dateCalc";
 let date = new DateCalc();
 
+// ACTION IMPORTS
+import {
+  CHANGE_STARTEPOCH,
+  CHANGE_ENDEPOCH,
+  CHANGE_STARTDATE,
+  CHANGE_ENDDATE,
+} from "../store/dateRangeReducer";
+
 function DateRange(props) {
-  const appDispatch = useContext(DispatchContext);
-  const appState = useContext(StateContext);
+  // REDUX HOOKS START
+  const dispatch = useDispatch();
+  // REDUX HOOKS END
 
   function changeStartDate(e) {
-    appDispatch({
-      type: "changeStartDate",
-      value: e.target.value,
-    });
-    appDispatch({
-      type: "changeStartEpoch",
-      value: new Date(e.target.value).valueOf(),
+    dispatch({ type: CHANGE_STARTDATE, startDate: e.target.value });
+    dispatch({
+      type: CHANGE_STARTEPOCH,
+      startEpoch: new Date(e.target.value).valueOf(),
     });
   }
 
   function changeEndDate(e) {
-    appDispatch({
-      type: "changeEndDate",
-      value: e.target.value,
-    });
-    appDispatch({
-      type: "changeEndEpoch",
-      value: new Date(e.target.value).valueOf(),
+    dispatch({ type: CHANGE_ENDDATE, endDate: e.target.value });
+    dispatch({
+      type: CHANGE_ENDEPOCH,
+      endEpoch: new Date(e.target.value).valueOf(),
     });
   }
 
@@ -43,55 +45,35 @@ function DateRange(props) {
     "authorizationCode"
   )}&grant_type=authorization_code`;
 
-  Axios.post(postUrl)
-    .then((response) => {
-      console.log(response.data);
-      localStorage.setItem("strava_access_token", response.data.access_token);
-      localStorage.setItem("strava_refresh_token", response.data.refresh_token);
-      localStorage.setItem(
-        "currentAthlete",
-        JSON.stringify(response.data.athlete)
-      ),
-        localStorage.setItem("strava_expires-at", response.data.expires_at),
-        localStorage.setItem("strava_expires-in", response.data.expires_in);
-      console.log(JSON.parse(localStorage.getItem("currentAthlete")));
-    })
-    .catch((error) => console.log(error));
+  // Axios.post(postUrl)
+  //   .then((response) => {
+  //     console.log(response.data);
+  //     localStorage.setItem("strava_access_token", response.data.access_token);
+  //     localStorage.setItem("strava_refresh_token", response.data.refresh_token);
+  //     localStorage.setItem(
+  //       "currentAthlete",
+  //       JSON.stringify(response.data.athlete)
+  //     ),
+  //       localStorage.setItem("strava_expires-at", response.data.expires_at),
+  //       localStorage.setItem("strava_expires-in", response.data.expires_in);
+  //     console.log(JSON.parse(localStorage.getItem("currentAthlete")));
+  //   })
+  //   .catch((error) => console.log(error));
 
   /* UseEffect */
-  useEffect(() => {
-    if (appState.startEpoch > appState.endEpoch) {
-      appDispatch({
-        type: "changeInfo",
-        value: "End date is after the start date!",
-      });
-      appDispatch({
-        type: "changeInfoStyle",
-        value: "text--strava text--pulsing",
-      });
-      if (appState.flashMessages) {
-        appDispatch({
-          type: "flashMessage",
-          value: "End date is after the start date!!",
-        });
-      }
-    } else {
-      appDispatch({
-        type: "changeInfo",
-        value: "Select the date range",
-      });
-      appDispatch({
-        type: "changeInfoStyle",
-        value: "",
-      });
-    }
-  }, [appState.startEpoch, appState.endEpoch]);
-
-  useEffect(() => {
-    if (appState.flashMessages) {
-      appDispatch({ type: "flashMessage", value: "Connected to Strava!" });
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (appState.startEpoch > appState.endEpoch) {
+  //     appDispatch({
+  //       type: "changeInfoStyle",
+  //       value: "text--strava text--pulsing",
+  //     });
+  //   } else {
+  //     appDispatch({
+  //       type: "changeInfoStyle",
+  //       value: "",
+  //     });
+  //   }
+  // }, [appState.startEpoch, appState.endEpoch]);
 
   return (
     <>
@@ -103,7 +85,7 @@ function DateRange(props) {
           className="date-range__date  box box--inset-tiny text text--normal text--tiny"
           type="date"
           name="start-date"
-          defaultValue={appState.startDate}
+          // defaultValue={appState.startDate}
           id=""
         />
         <input
@@ -113,14 +95,14 @@ function DateRange(props) {
           className="date-range__date box box--inset-tiny text text--normal text--tiny"
           type="date"
           name="end-date"
-          defaultValue={appState.endDate}
+          // defaultValue={appState.endDate}
           id=""
         />
-        <p
+        {/* <p
           className={`date-range__info text text--sn text--center ${appState.infoStyle}`}
         >
           {appState.info}
-        </p>
+        </p> */}
         <button className="date-range__submit box box--tiny text text--tiny text--small">
           Get
         </button>
