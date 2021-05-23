@@ -1,12 +1,12 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState } from "react";
 import Axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 
 /* Import Context */
 
 // SCRIPT IMPORTS
-import DateCalc from "../scripts/dateCalc";
-let date = new DateCalc();
+import currentDate from "../scripts/dateCalc";
+const date = currentDate();
 
 // ACTION IMPORTS
 import {
@@ -17,8 +17,13 @@ import {
 } from "../store/dateRangeReducer";
 
 function DateRange(props) {
+  // REACT HOOKS START
+  const [dateRangeErrors, setDateRangeErrors] = useState(false);
+  // REACT HOOKS END
   // REDUX HOOKS START
   const dispatch = useDispatch();
+  const startEpoch = useSelector((store) => store.dateRangeReducer.startEpoch);
+  const endEpoch = useSelector((store) => store.dateRangeReducer.endEpoch);
   // REDUX HOOKS END
 
   function changeStartDate(e) {
@@ -37,43 +42,26 @@ function DateRange(props) {
     });
   }
 
-  /* Making a request for the access token */
+  useEffect(() => {
+    if (startEpoch > endEpoch) {
+      setDateRangeErrors(true);
+    } else {
+      setDateRangeErrors(false);
+    }
+  }, [startEpoch, endEpoch]);
 
-  const postUrl = `https://www.strava.com/oauth/token?client_id=${
-    process.env.CLIENTID
-  }&client_secret=${process.env.CLIENTSECRET}&code=${localStorage.getItem(
-    "authorizationCode"
-  )}&grant_type=authorization_code`;
-
-  // Axios.post(postUrl)
-  //   .then((response) => {
-  //     console.log(response.data);
-  //     localStorage.setItem("strava_access_token", response.data.access_token);
-  //     localStorage.setItem("strava_refresh_token", response.data.refresh_token);
-  //     localStorage.setItem(
-  //       "currentAthlete",
-  //       JSON.stringify(response.data.athlete)
-  //     ),
-  //       localStorage.setItem("strava_expires-at", response.data.expires_at),
-  //       localStorage.setItem("strava_expires-in", response.data.expires_in);
-  //     console.log(JSON.parse(localStorage.getItem("currentAthlete")));
-  //   })
-  //   .catch((error) => console.log(error));
-
-  /* UseEffect */
-  // useEffect(() => {
-  //   if (appState.startEpoch > appState.endEpoch) {
-  //     appDispatch({
-  //       type: "changeInfoStyle",
-  //       value: "text--strava text--pulsing",
-  //     });
-  //   } else {
-  //     appDispatch({
-  //       type: "changeInfoStyle",
-  //       value: "",
-  //     });
-  //   }
-  // }, [appState.startEpoch, appState.endEpoch]);
+  useEffect(() => {
+    dispatch({ type: CHANGE_STARTDATE, startDate: new Date() });
+    dispatch({
+      type: CHANGE_STARTEPOCH,
+      startEpoch: new Date().valueOf(),
+    });
+    dispatch({ type: CHANGE_ENDDATE, endDate: new Date() });
+    dispatch({
+      type: CHANGE_ENDEPOCH,
+      endEpoch: new Date().valueOf(),
+    });
+  }, []);
 
   return (
     <>
@@ -85,7 +73,7 @@ function DateRange(props) {
           className="date-range__date  box box--inset-tiny text text--normal text--tiny"
           type="date"
           name="start-date"
-          // defaultValue={appState.startDate}
+          defaultValue={date}
           id=""
         />
         <input
@@ -95,15 +83,19 @@ function DateRange(props) {
           className="date-range__date box box--inset-tiny text text--normal text--tiny"
           type="date"
           name="end-date"
-          // defaultValue={appState.endDate}
+          defaultValue={date}
           id=""
         />
-        {/* <p
-          className={`date-range__info text text--sn text--center ${appState.infoStyle}`}
+        <p
+          className={`date-range__info text text--sn text--center ${
+            dateRangeErrors ? "text--strava text--pulsing" : ""
+          }`}
         >
-          {appState.info}
-        </p> */}
-        <button className="date-range__submit box box--tiny text text--tiny text--small">
+          {!dateRangeErrors
+            ? "Select Date Range"
+            : "Start Date cannot be later than end date"}
+        </p>
+        <button className="date-range__submit box box--tiny text text--normal">
           Get
         </button>
       </div>
