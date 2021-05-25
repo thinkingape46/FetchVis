@@ -5,8 +5,10 @@ import Page from "../components/Page";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 
+const redirect_uri = process.env.REDIRECTURI;
+
 function Login(props) {
-  const oauthUrl = `https://www.strava.com/oauth/authorize?client_id=${process.env.CLIENTID}&response_type=code&redirect_uri=http://localhost:3006/accesstoken&approval_prompt=force&scope=read,profile:read_all,activity:read,activity:read_all`;
+  const oauthUrl = `https://www.strava.com/oauth/authorize?client_id=${process.env.CLIENTID}&response_type=code&redirect_uri=${redirect_uri}&approval_prompt=force&scope=read,profile:read_all,activity:read,activity:read_all`;
 
   return (
     <Page title={"Connect to Strava"}>
