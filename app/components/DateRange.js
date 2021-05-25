@@ -30,9 +30,7 @@ function DateRange(props) {
   const dispatch = useDispatch();
   const startEpoch = useSelector((store) => store.dateRangeReducer.startEpoch);
   const endEpoch = useSelector((store) => store.dateRangeReducer.endEpoch);
-  const accessToken = useSelector(
-    (store) => store.stravaTokenReducer.accessToken
-  );
+  const accessToken = sessionStorage.getItem("strava_access_token");
   // REDUX HOOKS END
 
   function changeStartDate(e) {

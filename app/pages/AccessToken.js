@@ -20,12 +20,12 @@ function AccessToken(props) {
 
       case "code":
         parameters["authorizationCode"] = response[i].split("=")[1];
-        localStorage.setItem("authorizationCode", response[i].split("=")[1]);
+        sessionStorage.setItem("authorizationCode", response[i].split("=")[1]);
         break;
 
       case "scope":
         parameters["scope"] = response[i].split("=")[1];
-        localStorage.setItem("scopeReceived", response[i].split("=")[1]);
+        sessionStorage.setItem("scopeReceived", response[i].split("=")[1]);
         break;
     }
   }
