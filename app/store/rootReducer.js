@@ -4,11 +4,15 @@ import { createStore, combineReducers } from "redux";
 import authReducer from "./authReducer";
 import dateRangeReducer from "./dateRangeReducer";
 import userProfileReducer from "./userProfileReducer";
+import stravaTokenReducer from "./stravaTokensReducer";
+import activitiesReducer from "./activitiesReducer";
 
 const combinedReducers = combineReducers({
   authReducer,
   dateRangeReducer,
   userProfileReducer,
+  stravaTokenReducer,
+  activitiesReducer,
 });
 
 const store = createStore(
