@@ -36,7 +36,6 @@ function AccessToken(props) {
       parameters["scope"] ===
         "read,activity:read,activity:read_all,profile:read_all"
     ) {
-      console.log("hello");
       dispatch({ type: LOGIN });
       dispatch({
         type: ADDSCOPE,
