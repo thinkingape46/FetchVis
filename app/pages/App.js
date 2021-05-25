@@ -25,7 +25,7 @@ function Login(props) {
     if (authorizationCode === "") {
       props.history.push("/");
     }
-    if (accessToken === "") {
+    if (accessToken === null) {
       const postUrl = `https://www.strava.com/oauth/token?client_id=${process.env.CLIENTID}&client_secret=${process.env.CLIENTSECRET}&code=${authorizationCode}&grant_type=authorization_code`;
 
       Axios.post(postUrl)
@@ -74,6 +74,21 @@ function Login(props) {
     }
   }, []);
   // MAKING A REQUEST FOR ACCESS TOKEN END
+  useEffect(() => {
+    if (sessionStorage.getItem("currentAthlete")) {
+      const currentAthlete = JSON.parse(
+        sessionStorage.getItem("currentAthlete")
+      );
+      dispatch({
+        type: USERDATA,
+        userData: {
+          firstName: currentAthlete.firstname,
+          lastName: currentAthlete.lastname,
+          profilePicture: currentAthlete.profile,
+        },
+      });
+    }
+  });
   return (
     <Page title={"App"}>
       <Header />
