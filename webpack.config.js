@@ -18,6 +18,7 @@ class RunAfterCompile {
   apply(compiler) {
     compiler.hooks.done.tap("Copy files", function () {
       fse.copySync("./app/images", "./docs/images");
+      fse.copySync("./app/_redirects", "./docs/_redirects");
 
       /*
         If you needed to copy another file or folder
