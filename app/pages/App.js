@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 // COMPONENT IMPORTS
 import Page from "../components/Page";
 import Header from "../components/Header";
-import UserProfile from "../components/UserProfile";
+// import UserProfile from "../components/UserProfile";
 import DateRange from "../components/DateRange";
 import Distance from "../components/Distance";
 import Footer from "../components/Footer";
@@ -30,7 +30,6 @@ function Login(props) {
 
       Axios.post(postUrl)
         .then((response) => {
-          console.log(response.data);
           sessionStorage.setItem(
             "strava_access_token",
             response.data.access_token
@@ -70,7 +69,9 @@ function Login(props) {
             },
           });
         })
-        .catch((error) => console.log(error));
+        .catch((error) => {
+          throw error;
+        });
     }
   }, []);
   // MAKING A REQUEST FOR ACCESS TOKEN END
@@ -92,7 +93,7 @@ function Login(props) {
   return (
     <Page title={"App"}>
       <Header />
-      <UserProfile />
+      {/* <UserProfile /> */}
       <DateRange />
       <Distance />
       <Footer />

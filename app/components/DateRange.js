@@ -52,7 +52,6 @@ function DateRange(props) {
   const getActivities = async () => {
     const getActivitiesUrl = `https://www.strava.com/api/v3/athlete/activities?before=${endEpoch}&after=${startEpoch}&page=1&per_page=200&access_token=${accessToken}`;
     const data = await getRequest(getActivitiesUrl);
-    console.log(data.data);
     const rides = getActivitiesByType(data.data, "Ride");
     const ridesDistance = getActivitiesDistanceByType(rides, "Ride");
     const runs = getActivitiesByType(data.data, "Run");

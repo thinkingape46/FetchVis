@@ -13,7 +13,6 @@ export const ACTIVITIESDATA = "ACTIVITIESDATA";
 const activitiesReducer = (state = initialState, action) => {
   switch (action.type) {
     case ACTIVITIESDATA: {
-      console.log("line16");
       return {
         activitiesData: action.data.activitiesData,
         rides: action.data.rides,
