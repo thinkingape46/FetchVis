@@ -2,7 +2,7 @@ import React from "react";
 import Page from "../components/Page";
 
 // COMPONENT IMPORTS
-import Header from "../components/Header";
+import HeaderGuest from "../components/HeaderGuest";
 import Footer from "../components/Footer";
 
 const redirect_uri = process.env.REDIRECTURI;
@@ -12,7 +12,7 @@ function Login(props) {
 
   return (
     <Page title={"Connect to Strava"}>
-      <Header />
+      <HeaderGuest />
       <div
         className="connect-strava box text text--normal"
         onClick={() => window.location.replace(oauthUrl)}
