@@ -39,7 +39,7 @@ const config = {
   mode: "development",
   devtool: "eval-cheap-source-map",
   plugins: [
-    new Dotenv(),
+    new Dotenv({ systemvars: true }),
     new HtmlWebPackPlugin({
       filename: "index.html",
       template: "./app/index.html",
