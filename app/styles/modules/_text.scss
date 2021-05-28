@@ -37,3 +37,33 @@
     transform: scale(1);
   }
 }
+
+@media (min-width: 420px) {
+  .text {
+    color: #fff;
+    &--strava {
+      color: var(--strava-orange);
+    }
+    &--medium {
+      font-size: 1.3rem;
+    }
+    &--normal {
+      font-size: 1rem;
+    }
+    &--sn {
+      font-size: 0.85rem;
+    }
+    &--small {
+      font-size: 1rem;
+    }
+    &--tiny {
+      font-weight: 100;
+    }
+    &--center {
+      text-align: center;
+    }
+    &--pulsing {
+      @include animation(text-pulsing, 0.5s, ease-in-out, infinite);
+    }
+  }
+}

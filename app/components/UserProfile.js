@@ -12,14 +12,14 @@ const UserProfile = () => {
   return (
     <>
       <div className="user-profile">
+        <p className="user-profile__fullname text text--small text--center">
+          {firstName}&nbsp;{lastName}
+        </p>
         <img
           src={profilePicture}
           alt="User profile picture"
           className="user-profile__picture"
         />
-        <p className="user-profile__fullname text text--normal text--center">
-          {firstName}&nbsp;{lastName}
-        </p>
       </div>
     </>
   );

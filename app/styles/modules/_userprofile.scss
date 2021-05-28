@@ -1,12 +1,11 @@
 .user-profile {
   margin: 5px;
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
   &__picture {
-    height: 75px;
-    width: 75px;
+    height: 40px;
+    width: 40px;
     border-radius: 50%;
     object-fit: contain;
   }

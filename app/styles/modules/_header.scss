@@ -1,6 +1,19 @@
 .header {
-  &__link {
+  display: flex;
+  margin: 10px 0;
+  width: 95%;
+  justify-content: space-between;
+  align-items: center;
+  &__logo {
     display: flex;
+    justify-content: center;
+    align-items: center;
     text-decoration: none;
+  }
+}
+
+@media (min-width: 768px) {
+  .header {
+    width: 70%;
   }
 }
