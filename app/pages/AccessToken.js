@@ -10,7 +10,6 @@ function AccessToken(props) {
   // REDUX HOOKS END
 
   useEffect(() => {
-    console.log("14");
     try {
       const response = window.location.href.split("?")[1].split("&");
       const parameters = {};

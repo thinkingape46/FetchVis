@@ -26,6 +26,10 @@ function Login(props) {
       const response = await Axios.post("/.netlify/functions/stravaOAuth", {
         authorizationCode: authorizationCode,
       });
+      console.log(response);
+      console.log(response.data);
+      console.log(JSON.parse(response.data));
+      console.log(JSON.parse(JSON.parse(response.data)));
       const data = JSON.parse(response.data);
       sessionStorage.setItem("strava_access_token", data.access_token);
       sessionStorage.setItem("strava_refresh_token", data.refresh_token);
@@ -77,18 +81,7 @@ function Login(props) {
       });
     }
   }, []);
-  // const tempfunc = async () => {
-  //   const response = await Axios.post(
-  //     "http://localhost:8888/.netlify/functions/stravaOAuth",
-  //     {
-  //       authorizationCode: "authorizationCode",
-  //     }
-  //   );
-  //   console.log(response.data);
-  // };
-  // useEffect(() => {
-  //   tempfunc();
-  // }, []);
+
   return (
     <Page title={"App"}>
       <Header />
