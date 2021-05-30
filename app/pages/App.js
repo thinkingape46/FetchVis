@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import Axios from "axios";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 // COMPONENT IMPORTS
 import Page from "../components/Page";
@@ -21,57 +21,44 @@ function Login(props) {
   const authorizationCode = sessionStorage.getItem("authorizationCode");
   // REDUX HOOKS END
   // MAKING A REQUEST FOR ACCESS TOKEN START
-  useEffect(() => {
-    if (authorizationCode === "") {
-      props.history.push("/");
+  const getAccessToken = async () => {
+    try {
+      const response = await Axios.post("/.netlify/functions/stravaOAuth", {
+        authorizationCode: authorizationCode,
+      });
+      const data = JSON.parse(response.data);
+      sessionStorage.setItem("strava_access_token", data.access_token);
+      sessionStorage.setItem("strava_refresh_token", data.refresh_token);
+      sessionStorage.setItem("currentAthlete", JSON.stringify(data.athlete));
+      sessionStorage.setItem("strava_expires-at", data.expires_at);
+      sessionStorage.setItem("strava_expires-in", data.expires_in);
+      dispatch({
+        type: USERDATA,
+        userData: {
+          firstName: data.athlete.firstname,
+          lastName: data.athlete.lastname,
+          profilePicture: data.athlete.profile,
+        },
+      });
+      dispatch({
+        type: STRAVATOKEN,
+        tokenData: {
+          accessToken: data.access_token,
+          expiresAt: data.expires_at,
+          expiresIn: data.expires_in,
+          refreshToken: data.refresh_token,
+          tokenType: data.token_type,
+        },
+      });
+    } catch (error) {
+      throw error;
     }
-    if (accessToken === null) {
-      const postUrl = `https://www.strava.com/oauth/token?client_id=${process.env.CLIENTID}&client_secret=${process.env.CLIENTSECRET}&code=${authorizationCode}&grant_type=authorization_code`;
-
-      Axios.post(postUrl)
-        .then((response) => {
-          sessionStorage.setItem(
-            "strava_access_token",
-            response.data.access_token
-          );
-          sessionStorage.setItem(
-            "strava_refresh_token",
-            response.data.refresh_token
-          );
-          sessionStorage.setItem(
-            "currentAthlete",
-            JSON.stringify(response.data.athlete)
-          ),
-            sessionStorage.setItem(
-              "strava_expires-at",
-              response.data.expires_at
-            ),
-            sessionStorage.setItem(
-              "strava_expires-in",
-              response.data.expires_in
-            );
-          dispatch({
-            type: USERDATA,
-            userData: {
-              firstName: response.data.athlete.firstname,
-              lastName: response.data.athlete.lastname,
-              profilePicture: response.data.athlete.profile,
-            },
-          });
-          dispatch({
-            type: STRAVATOKEN,
-            tokenData: {
-              accessToken: response.data.access_token,
-              expiresAt: response.data.expires_at,
-              expiresIn: response.data.expires_in,
-              refreshToken: response.data.refresh_token,
-              tokenType: response.data.token_type,
-            },
-          });
-        })
-        .catch((error) => {
-          throw error;
-        });
+  };
+  useEffect(() => {
+    if (authorizationCode === null) {
+      props.history.push("/");
+    } else if (accessToken === null) {
+      getAccessToken();
     }
   }, []);
   // MAKING A REQUEST FOR ACCESS TOKEN END
@@ -89,7 +76,19 @@ function Login(props) {
         },
       });
     }
-  });
+  }, []);
+  // const tempfunc = async () => {
+  //   const response = await Axios.post(
+  //     "http://localhost:8888/.netlify/functions/stravaOAuth",
+  //     {
+  //       authorizationCode: "authorizationCode",
+  //     }
+  //   );
+  //   console.log(response.data);
+  // };
+  // useEffect(() => {
+  //   tempfunc();
+  // }, []);
   return (
     <Page title={"App"}>
       <Header />
