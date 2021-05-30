@@ -26,11 +26,7 @@ function Login(props) {
       const response = await Axios.post("/.netlify/functions/stravaOAuth", {
         authorizationCode: authorizationCode,
       });
-      console.log(response);
-      console.log(response.data);
-      console.log(JSON.parse(response.data));
-      console.log(JSON.parse(JSON.parse(response.data)));
-      const data = JSON.parse(response.data);
+      const data = response.data.data;
       sessionStorage.setItem("strava_access_token", data.access_token);
       sessionStorage.setItem("strava_refresh_token", data.refresh_token);
       sessionStorage.setItem("currentAthlete", JSON.stringify(data.athlete));
