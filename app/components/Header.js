@@ -13,7 +13,7 @@ function Header() {
             src="images/howfar_logo.svg"
             alt=""
           />
-          <p className="header__logo__text text text--medium">How Far</p>
+          <p className="header__logo__text text text--medium">FetchVis</p>
         </div>
         <UserProfile />
       </header>
